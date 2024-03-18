@@ -43,13 +43,13 @@ class ChatPage(tk.Tk):
         self.configure(bg="#191414")  # Spotify green
         self.geometry("800x600")
         self.iconbitmap('icon.ico')
-        
-        
-        self.generated_flag = tk.BooleanVar(self, False)
-        self.display_answer = tk.StringVar(self, "")
-        self.display_answer.set(gpt.generateWelcomeText(spoti.getUserName()))
         self.def_font = font.Font(family="Dubai Medium", size=12)
         
+        self.generated_flag = tk.BooleanVar(self, False)
+        
+        self.display_answer = tk.StringVar(self, "")
+        self.display_answer.set(gpt.generateWelcomeText(spoti.getUserName()))
+    
         self.create_widgets()
 
     def createButtons(self) -> None:
@@ -76,10 +76,6 @@ class ChatPage(tk.Tk):
 
             self.selected_generation_term.set(generation_terms_options[1])
             self.selected_model.set(model_options[0])
-            '''
-            generation_terms_menu = tk.OptionMenu(self, self.selected_generation_term, *generation_terms_options)
-            model_menu = tk.OptionMenu(self, self.selected_model, *model_options)
-            '''
 
             generation_terms_menu = ttk.Combobox(self, textvariable=self.selected_generation_term, values=generation_terms_options)
             model_menu = ttk.Combobox(self, textvariable=self.selected_model, values=model_options)
@@ -98,7 +94,6 @@ class ChatPage(tk.Tk):
         gpt.generateAnswer(spoti.mostListenedArtist(time_interval=self.selected_generation_term.get()))
         self.generated_flag.set(True)
         self.display_answer.set(gpt.artist_and_songs)
-
 
     def generate_playlist(self): # TODO Finish this function
         spoti.playlist()
