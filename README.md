@@ -25,7 +25,7 @@ Used Python libraries are:
 - tkinter
 
 ### Logo
-The logo was created with [Onlinelogomaker](https://www.onlinelogomaker.com/). The pictures are made with Dall-e 2.0
+The logo was created with [Onlinelogomaker](https://www.onlinelogomaker.com/),and the pictures are made with [DALL-E 2.0](https://openai.com/dall-e-2).
 
 > [!WARNING]
 > Still under development
