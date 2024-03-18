@@ -5,8 +5,6 @@ import time
 import base64
 from logManager import LogManager
 
-# TODO optimalizalni, tesztelni es bugfixelni kell.
-
 class Music:
     '''Spotify zenegeneralo. Inicializalasnal fontos, hogy a megadott parameterekbol mindegyikhez szerepljen megfelelo adat.'''
     def __init__(self, client_id: str, client_secret: str, redirect_uri: str, scope: list[str], logger:LogManager) -> None:
