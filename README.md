@@ -20,9 +20,9 @@ I've used Github Copilot, for the comments, Docstrings and to generate more read
 ### Python Libraries
 Used Python libraries are:
 
--openai
--webbrowser
--spotipy
--time
--base64
--tkinter
+- openai
+- webbrowser
+- spotipy
+- time
+- base64
+- tkinter
