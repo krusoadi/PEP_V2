@@ -37,12 +37,13 @@ class LoginPage(tk.Tk):
 class ChatPage(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Chat Page")
+        self.title("Playlist Generator")
         self.configure(bg="#191414")  # Spotify green
         self.geometry("800x600")
         
         self.generated_flag = tk.BooleanVar(self, False)
-        self.display_answer = tk.StringVar(self, "Welcome to Listify, let's generate some playlists!")
+        self.display_answer = tk.StringVar(self, "")
+        self.display_answer.set(gpt.generateWelcomeText(spoti.getUserName()))
         self.def_font = font.Font(family="Dubai Medium", size=12)
         
         self.create_widgets()

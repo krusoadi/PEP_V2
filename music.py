@@ -44,7 +44,10 @@ class Music:
         auth_url = authorizer.get_authorize_url()
         webbrowser.open(auth_url)
         self._setClient(authorizer)
-    
+    def getUserName(self) -> str:
+        """This method returns the current users name."""
+        return self.client.me()["display_name"]
+        
     def _setTimestamp(self) -> None:
         '''Private method, sets the last timestamp to the current time.'''
         self.last_timestamp = f"{time.localtime(time.time()).tm_hour}:{time.localtime(time.time()).tm_min}"

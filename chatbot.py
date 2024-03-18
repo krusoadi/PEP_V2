@@ -75,4 +75,20 @@ class ChatBot:
         
         self._answerParser()
         self._autoSave() 
-        
+    
+    def generateWelcomeText(self, name: str) -> str:
+        answer = self.client.chat.completions.create(
+            model=self.model,
+            messages=[ 
+                {"role": "system", "content": f"You are a young slangy playlist generator. Your name is Listify Assistant, always introduce yourself, and you have to greet the new user (His/her name is {name}),with a welcoming text. Advise to make playlist."},
+                {"role": "assistant", "content": "Hey, what's up dude I'm Listify Assistant, let me generate you some new playlist."},
+            ],
+            temperature=self.temperature,
+            top_p=self.top_p,
+            n=self.n,
+            frequency_penalty=self.frequency_penalty
+        )
+        self.last_response_tokens = answer.usage.total_tokens
+        self.session_tokens += answer.usage.total_tokens
+
+        return answer.choices[0].message.content
