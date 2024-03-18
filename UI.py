@@ -49,14 +49,13 @@ class ChatPage(tk.Tk):
         self.answer_label = tk.Label(self.answer_frame, text="Modifyable String", bg="#F0F0F0")  # Label with modifiable string
         self.answer_label.pack()
 
-    def generate_answer(self):
+    def generate_answer(self): # TODO Finish this function, rn it only gets the most listened artist and adds a song to the playlist
         gpt.generateAnswer(spoti.mostListenedArtist(time_interval="short_term"))
         spoti.playlist()
         spoti.addSongToPlaylist(song_uri=spoti.getSongIdByName(gpt.artist_and_songs))
 
 
-    def generate_playlist(self):
-        # Add code to generate playlist here
+    def generate_playlist(self): # TODO Finish this function
         pass
 
 
@@ -65,6 +64,3 @@ if __name__ == "__main__":
     app.mainloop()
     app = ChatPage()
     app.mainloop()
-
-
-#valami a spotify playtlist/ addsong cuccnal van kene valami debug ami nem viszi a tokent
