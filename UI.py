@@ -5,7 +5,7 @@ from chatbot import ChatBot
 import apis
 from logManager import LogManager
 
-# TODO Making full user interface and commenting the code
+# TODO Making answer display better and commenting the code
 logger = LogManager()
 spoti = Music(apis.CLIENT_ID, apis.CLIENT_SECRET, apis.REDIRECT_URI, apis.SCOPE, logger=logger)
 gpt = ChatBot(apis.OPENAI_API)
@@ -26,7 +26,7 @@ class LoginPage(tk.Tk):
         canvas.create_image(0, 0, anchor=tk.NW, image=self.image)     
         canvas.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
         
-        login_button = tk.Button(self, text="Login", bg="#008C16", fg="white", width=15, height=2, font=self.def_font, command=self.redirect)  # Spotify grey
+        login_button = tk.Button(self, text="Login", bg="#008C16", fg="white", width=15, height=2, font=self.def_font, command=self.redirect)  #? Spotify grey
         login_button.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
 
     def redirect(self):
@@ -55,7 +55,6 @@ class ChatPage(tk.Tk):
         answer_label = tk.Label(text_canvas, textvariable=self.display_answer, bg="#F0F0F0", fg="black", wraplength=480, font=self.def_font)
         answer_label.place(x=10, y=10)
         
-          
         generate_answer_button = tk.Button(self, text="Generate Answer", bg="#008C16", width=15, height=2, fg="white", font=self.def_font, command=self.generate_answer)
         generate_answer_button.place(relx=0.3, rely=0.8, anchor=tk.CENTER)
 
