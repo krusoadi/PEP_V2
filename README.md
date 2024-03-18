@@ -2,7 +2,7 @@
 
 ## Basic infos
 
-This project is made for my Prompt Engineering class atu BME. With this project I've learned the basics of Spotipy and Openai python libraries. WIth this project I'm also learning how to use Github, and Github Copilot efficiently for my studies.
+This project is made for my Prompt Engineering class at BME. With this project I've learned the basics of Spotipy and Openai python libraries. In this project I'm also learning how to use Github, and Github Copilot efficiently for my studies.
 
 ## Used extensions, etc.
 
@@ -16,3 +16,13 @@ I've used Github Copilot, for the comments, Docstrings and to generate more read
 
 > [!CAUTION]
 > Still under development
+
+### Python Libraries
+Used Python libraries are:
+
+-openai
+-webbrowser
+-spotipy
+-time
+-base64
+-tkinter
