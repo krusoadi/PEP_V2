@@ -24,6 +24,9 @@ Used Python libraries are:
 - base64
 - tkinter
 
+### Logo
+The logo was created with [Onlinelogomaker](https://www.onlinelogomaker.com/).
+
 > [!WARNING]
 > Still under development
 
