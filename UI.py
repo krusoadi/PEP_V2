@@ -24,7 +24,6 @@ class LoginPage(tk.Tk):
 
     def redirect(self):
         spoti.authorizeUser()
-        print("pipa")
         self.destroy()
         pass
 
