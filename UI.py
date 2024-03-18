@@ -61,5 +61,6 @@ class ChatPage(tk.Tk):
 if __name__ == "__main__":
     app = LoginPage()
     app.mainloop()
-    app = ChatPage()
-    app.mainloop()
+    if spoti.is_authorized == True:
+        app = ChatPage()
+        app.mainloop()
