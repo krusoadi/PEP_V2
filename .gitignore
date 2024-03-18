@@ -3,3 +3,4 @@ apis.py
 __pycache__
 events.log
 responses.txt
+font_test.py
