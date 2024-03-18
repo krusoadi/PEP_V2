@@ -68,7 +68,7 @@ class ChatPage(tk.Tk):
         answer_label.place(x=10, y=10)
         
     def createDropdownMenus(self) -> None:
-            generation_terms_options = ["short_term", "medium_term", "long_term"]
+            generation_terms_options = apis.TIME_RANGE.copy()
             model_options = ["gpt-3.5-turbo", "gpt-4-0125-preview"]
 
             self.selected_generation_term = tk.StringVar(self)
