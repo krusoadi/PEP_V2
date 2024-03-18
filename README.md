@@ -8,14 +8,11 @@ This project is made for my Prompt Engineering class at BME. With this project I
 
 ### Comments
 
-The comments are coloured by "Better Comments" VSCode extension. The "#?" comments are descriptions for variables. The "#!" comments are warnings, and the "#TODO" comments mark unfinished methods and files.
+The comments are colored by "Better Comments" VSCode extension. The "#?" comments are descriptions for variables. The "#!" comments are warnings, and the "#TODO" comments mark unfinished methods and files.
 
 ### Github Copilot
 
 I've used Github Copilot, for the comments, Docstrings and to generate more readable codes.
-
-> [!CAUTION]
-> Still under development
 
 ### Python Libraries
 Used Python libraries are:
@@ -26,3 +23,7 @@ Used Python libraries are:
 - time
 - base64
 - tkinter
+
+> [!WARNING]
+> Still under development
+
