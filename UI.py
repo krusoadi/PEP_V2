@@ -4,6 +4,7 @@ from music import Music
 from chatbot import ChatBot
 import apis
 from logManager import LogManager
+from tkinter import ttk
 
 # TODO Making answer display better and commenting the code
 logger = LogManager()
@@ -16,6 +17,7 @@ class LoginPage(tk.Tk):
         self.title("Login Page")
         self.configure(bg="#191414")  # Spotify green
         self.geometry("800x600")
+        self.iconbitmap('icon.ico')
         self.image = image = tk.PhotoImage(file="mainLogo.png")
         self.def_font = font.Font(family="Dubai Medium", size=12)
         
@@ -40,6 +42,8 @@ class ChatPage(tk.Tk):
         self.title("Playlist Generator")
         self.configure(bg="#191414")  # Spotify green
         self.geometry("800x600")
+        self.iconbitmap('icon.ico')
+        
         
         self.generated_flag = tk.BooleanVar(self, False)
         self.display_answer = tk.StringVar(self, "")
@@ -48,23 +52,50 @@ class ChatPage(tk.Tk):
         
         self.create_widgets()
 
-    def create_widgets(self):
-        
+    def createButtons(self) -> None:
+        generate_answer_button = tk.Button(self, text="Generate Music", bg="#008C16", width=15, height=2, fg="white", font=self.def_font, command=self.generate_answer)
+        generate_answer_button.place(relx=0.3, rely=0.85, anchor=tk.CENTER)
+
+        generate_playlist_button = tk.Button(self, text="Generate Playlist", bg="#008C16", width=15, height=2, fg="white", font=self.def_font, command=self.generate_playlist)
+        generate_playlist_button.wait_variable(self.generated_flag)
+        generate_playlist_button.place(relx=0.7, rely=0.85, anchor=tk.CENTER)
+
+    def createGPTTextSpace(self) -> None:
         text_canvas = tk.Canvas(self, width=500, height=400, bg="#F0F0F0", bd=0, highlightthickness=0)
         text_canvas.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
         
         answer_label = tk.Label(text_canvas, textvariable=self.display_answer, bg="#F0F0F0", fg="black", wraplength=480, font=self.def_font)
         answer_label.place(x=10, y=10)
         
-        generate_answer_button = tk.Button(self, text="Generate Answer", bg="#008C16", width=15, height=2, fg="white", font=self.def_font, command=self.generate_answer)
-        generate_answer_button.place(relx=0.3, rely=0.8, anchor=tk.CENTER)
+    def createDropdownMenus(self) -> None:
+            generation_terms_options = ["short_term", "mid_term", "long_term"]
+            model_options = ["gpt-3.5-turbo", "gpt-4-0125-preview"]
 
-        generate_playlist_button = tk.Button(self, text="Generate Playlist", bg="#008C16", width=15, height=2, fg="white", font=self.def_font, command=self.generate_playlist)
-        generate_playlist_button.wait_variable(self.generated_flag)
-        generate_playlist_button.place(relx=0.7, rely=0.8, anchor=tk.CENTER)
+            self.selected_generation_term = tk.StringVar(self)
+            self.selected_model = tk.StringVar(self)
+
+            self.selected_generation_term.set(generation_terms_options[1])
+            self.selected_model.set(model_options[0])
+            '''
+            generation_terms_menu = tk.OptionMenu(self, self.selected_generation_term, *generation_terms_options)
+            model_menu = tk.OptionMenu(self, self.selected_model, *model_options)
+            '''
+
+            generation_terms_menu = ttk.Combobox(self, textvariable=self.selected_generation_term, values=generation_terms_options)
+            model_menu = ttk.Combobox(self, textvariable=self.selected_model, values=model_options)
+
+            generation_terms_menu.place(relx=0.10, rely=0.85, anchor=tk.CENTER)
+            model_menu.place(relx=0.10, rely=0.9, anchor=tk.CENTER)
+
+
+    def create_widgets(self):
+        self.createGPTTextSpace()
+        self.createDropdownMenus()
+        self.createButtons()
         
-    def generate_answer(self): # TODO Finish this function, rn it only gets the most listened artist and adds a song to the playlist
-        gpt.generateAnswer(spoti.mostListenedArtist(time_interval="short_term"))
+    def generate_answer(self):
+        gpt.model = self.selected_model.get()
+        gpt.generateAnswer(spoti.mostListenedArtist(time_interval=self.selected_generation_term.get()))
         self.generated_flag.set(True)
         self.display_answer.set(gpt.artist_and_songs)
 
