@@ -1,14 +1,16 @@
 from openai import OpenAI
 from logManager import LogManager
 
-# TODO felkesz meg kell fejleszteni, tobb agra bontani a generateAnswer-t
+# TODO Add multiple model options (gpt 3.5/4 turbo)
+# TODO Add a method, for playlist picture generation 
+# TODO Add a method, for loading saved responses and use them for debugging (less tokens used)
 
 class ChatBot:
     def __init__(self, API_KEY: str) -> None:
-        #kliens
+        #? Client
         self.client = OpenAI(api_key=API_KEY)
         
-        #Modell belso adatai
+        #? Model parameters
         
         self.model = "gpt-3.5-turbo" #"gpt-4-0125-preview"
         self.temperature = 0.7
@@ -17,7 +19,7 @@ class ChatBot:
         self.frequency_penalty = 0.8
         self.delimiter = ";"
         
-        #Visszaadott belso ertekek
+        #? Return values
         
         self.last_full_response = None
         self.last_response_tokens = 0
@@ -41,7 +43,7 @@ class ChatBot:
             
             self.artist_and_songs.append([un_parsed_answer[i][1], un_parsed_answer[i][0]])
             
-    def _autoSave(self) -> None:
+    def _autoSave(self) -> None: 
         '''This function saves the last response into a file'''
         
         with open("responses.txt", "a", encoding="utf-8") as file:
@@ -54,10 +56,10 @@ class ChatBot:
             file.write(self.last_full_response.choices[0].message.content)
             file.write(f"\n\n--------session token usage: {self.session_tokens}--------------------\n")
     
-    def generateAnswer(self, most_listened_artists) -> None:
+    def generateAnswer(self, most_listened_artists) -> None: #! This needs to be made to multiple methods, with function overloading
         self.last_full_response = self.client.chat.completions.create(
             model=self.model,
-            messages=[
+            messages=[ 
                 {"role": "system", "content": f"You are a music assistant who generates song in the format of ARTIST{self.delimiter}SONG_NAME always separated with a new line, who only reccomends a song if it is not made by a Hungarian artist. Your job is to suggest songs, based on the artists, that the user listens to.The artists, are: {most_listened_artists} you can't suggest songs from these artist, you always come up with new ones related to these. Be creative and don't recommend a song more than once!"},
                 {"role": "user", "content": "Can you recommend me 3 songs?"},
                 {"role": "assistant", "content": "Travis Scott;SICKO MODE\nBeyonce;Single Ladies\nMacklemore;Can't Hold Us"},
@@ -72,5 +74,5 @@ class ChatBot:
         self.session_tokens += self.last_response_tokens
         
         self._answerParser()
-        self._autoSave()
+        self._autoSave() 
         

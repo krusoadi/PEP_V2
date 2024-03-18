@@ -4,6 +4,8 @@ from chatbot import ChatBot
 import apis
 from logManager import LogManager
 
+# TODO Making full user interface and commenting the code
+
 logger = LogManager()
 spoti = Music(apis.CLIENT_ID, apis.CLIENT_SECRET, apis.REDIRECT_URI, apis.SCOPE, logger=logger)
 gpt = ChatBot(apis.OPENAI_API)

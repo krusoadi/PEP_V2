@@ -1,6 +1,8 @@
 from os import path
 import time
 
+#TODO Commenting and making new methods
+
 class LogManager:
     def __init__(self) -> None:
         #Constructor
