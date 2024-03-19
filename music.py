@@ -65,14 +65,18 @@ class Music:
         playlist = self.client.user_playlist_create(self.client.current_user()["id"], name, True, False, description)
         self.playlist_id = playlist["id"]
     
-    def _loadCustomPlaylistPicture(self, path: str) -> str:
+    def _loadCustomPlaylistPicture(self, path: str) -> str: # ! Valami a baaj itt
         '''Private method, loads the picture from the given path, and returns it in base64 format.'''
-        with open(path, 'rb') as image_file:
-            base64_bytes = base64.b64encode(image_file.read())
-            base64_string = base64_bytes.decode()
+        try:
+            with open(path, 'rb') as image_file:
+                base64_bytes = base64.b64encode(image_file.read())
+                base64_string = base64_bytes.decode()
+            return base64_string
         
-        return base64_string
-    
+        except FileNotFoundError:
+            self.logger.logEvent(f"(Minor Error) Picture not found at: {path}\n")
+            return self._loadDefaultPicture()
+        
     def _loadDefaultPicture(self) -> str:
         '''Private method, loads the default picture for the playlist.'''
         with open('picture1.jpeg', 'rb') as image_file:
