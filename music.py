@@ -94,10 +94,11 @@ class Music:
             
         #? Error Handling
         
+        
         try:
             self.client.playlist_upload_cover_image(self.playlist_id, base64_string) # TODO Talan asyncio-val meg lehet oldani
-        except:
-            self.logger.logEvent("(Minor Error) Picture upload failed\n")
+        except Exception as e:
+            self.logger.logEvent(f"(Minor Error) Picture upload failed (Ex.: {e})\n")
             
     def addSongToPlaylist(self, song_uri: str | list[str]) -> None:
         '''Adds a song to the playlist. If the song_uri is a list, it will add all the songs in the list. If the song_uri is a string, it will add the song with the given uri.'''
@@ -110,10 +111,11 @@ class Music:
     def playlist(self, name: str = None, picture_path: str = None, song_id: str | list[str] = None, description: str = None) -> None:
         '''This method creates a playlist with the given name, description and picture. If no name is given, it will be named "New playlist made by AI (at {current_time})" and if no description is given, it will be "This was made by my prompt engineering AI project. my Github page:'''
         self._makePlaylist(name, description)
-        self._setPlaylistPicture(picture_path)
         
         if song_id != None:
            self.addSongToPlaylist(song_id)
+           
+        self._setPlaylistPicture(picture_path)
     
     def mostListenedArtist(self, time_interval: str = "long_term", top_n: int = 5) -> list[str]:
         '''Returns the top n most listened artists in the given time interval. The default time interval is "long_term" and the default n is 5. The time interval can be "short_term", "medium_term" or "long_term" and the n can be any positive integer.'''
