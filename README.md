@@ -14,6 +14,10 @@ The program supports the default Spotify time intervals. The long_term option wi
 
 Right now the program supports the GPT 3.5 Turbo and GPT4 model. The first model is better when we want more genereric, more deterministic answers, it mostly generates popular music made before 2021-22. However the GPT 4 is better at generating lesser-known music, and give as more verbose results. I advise using the GPT 4 model.
 
+### DALL-E 2
+
+For playlist picture generation, the program uses DALL-E 2. This can make the process much slower, and more expensive, so by default this function is turned off, but in the dropdown menu, this can be changed 
+
 ## Used extensions, etc.
 
 ### Comments
