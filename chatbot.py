@@ -1,7 +1,8 @@
 from openai import OpenAI
 from logManager import LogManager
 import urllib.request
-from os import path, mkdir
+from os import path, mkdir, remove
+from PIL import Image
 
 # TODO Add a method, for playlist picture generation 
 # TODO Add a method, for loading saved responses and use them for debugging (less tokens used)
@@ -126,8 +127,11 @@ class ChatBot:
         name = f"images\\{filename}.jpeg"
 
         urllib.request.urlretrieve(url, name)
-        
-        return name 
+        file = Image.open(name)
+        file.save(f"images\\{filename}_optimized.jpeg", "JPEG", optimize=True, quality=85)
+        file.close()
+        remove(name)
+        return f"images\\{filename}_optimized.jpeg" 
 
 
         
