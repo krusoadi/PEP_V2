@@ -117,7 +117,10 @@ class ChatBot:
             
         return returnString
     
-    def generateImage(self, prompt:str, filename:str) -> str:
+    def generateImage(self, prompt:str, filename:str, debug_mode:bool = False) -> str:
+        if debug_mode:
+             return f"images\\{filename}.jpeg"
+        
         resp = self.client.images.generate(prompt= prompt, model="dall-e-2", size="256x256", n=1, response_format="url")
         url = resp.data[0].url
         
