@@ -1,5 +1,7 @@
 from openai import OpenAI
 from logManager import LogManager
+import urllib.request
+from os import path, mkdir
 
 # TODO Add a method, for playlist picture generation 
 # TODO Add a method, for loading saved responses and use them for debugging (less tokens used)
@@ -113,4 +115,19 @@ class ChatBot:
             returnString += f"{element[1]} - {element[0]}\n"
             
         return returnString
+    
+    def generateImage(self, prompt:str, filename:str) -> str:
+        resp = self.client.images.generate(prompt= prompt, model="dall-e-2", size="256x256", n=1, response_format="url")
+        url = resp.data[0].url
+        
+        if not path.isdir("images"):
+            mkdir("images")
+
+        name = f"images\\{filename}.jpeg"
+
+        urllib.request.urlretrieve(url, name)
+        
+        return name 
+
+
         

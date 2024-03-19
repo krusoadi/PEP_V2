@@ -65,6 +65,14 @@ class Music:
         playlist = self.client.user_playlist_create(self.client.current_user()["id"], name, True, False, description)
         self.playlist_id = playlist["id"]
     
+    def _loadCustomPlaylistPicture(self, path: str) -> str:
+        '''Private method, loads the picture from the given path, and returns it in base64 format.'''
+        with open(path, 'rb') as image_file:
+            base64_bytes = base64.b64encode(image_file.read())
+            base64_string = base64_bytes.decode()
+        
+        return base64_string
+    
     def _loadDefaultPicture(self) -> str:
         '''Private method, loads the default picture for the playlist.'''
         with open('picture1.jpeg', 'rb') as image_file:
@@ -73,11 +81,15 @@ class Music:
 
         return base64_string
     
-    def _setPlaylistPicture(self, base64_string: str = None) -> None: # TODO valoszinuleg gyorsabban probal neha kepet feltolteni mint a playlist letrejon
+    def _setPlaylistPicture(self, path: str = None) -> None: # TODO valoszinuleg gyorsabban probal neha kepet feltolteni mint a playlist letrejon
         '''Private method, sets the picture of the playlist to the given base64 string. If no string is given, it will use the default picture.'''
-        if base64_string == None:
+        if path == None:
             base64_string = self._loadDefaultPicture()
-    
+        else:
+            base64_string = self._loadCustomPlaylistPicture(path)
+            
+        #? Error Handling
+        
         try:
             self.client.playlist_upload_cover_image(self.playlist_id, base64_string) # TODO Talan asyncio-val meg lehet oldani
         except:
@@ -91,10 +103,10 @@ class Music:
             except TypeError:
                 self.logger.logEvent(f"(Major Error) TypeError (song_uri: {song_uri}) at addSongToPlaylist\n")
                 
-    def playlist(self, name: str = None, picture_base64: str = None, song_id: str | list[str] = None, description: str = None) -> None:
+    def playlist(self, name: str = None, picture_path: str = None, song_id: str | list[str] = None, description: str = None) -> None:
         '''This method creates a playlist with the given name, description and picture. If no name is given, it will be named "New playlist made by AI (at {current_time})" and if no description is given, it will be "This was made by my prompt engineering AI project. my Github page:'''
         self._makePlaylist(name, description)
-        self._setPlaylistPicture(picture_base64)
+        self._setPlaylistPicture(picture_path)
         
         if song_id != None:
            self.addSongToPlaylist(song_id)
