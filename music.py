@@ -85,7 +85,7 @@ class Music:
 
         return base64_string
     
-    def _setPlaylistPicture(self, path: str = None) -> None: # TODO valoszinuleg gyorsabban probal neha kepet feltolteni mint a playlist letrejon
+    def _setPlaylistPicture(self, path: str = None) -> None: # TODO meg nem tokeletes
         '''Private method, sets the picture of the playlist to the given base64 string. If no string is given, it will use the default picture.'''
         if path == None:
             base64_string = self._loadDefaultPicture()
@@ -93,7 +93,6 @@ class Music:
             base64_string = self._loadCustomPlaylistPicture(path)
             
         #? Error Handling
-        
         
         try:
             self.client.playlist_upload_cover_image(self.playlist_id, base64_string) # TODO Talan asyncio-val meg lehet oldani

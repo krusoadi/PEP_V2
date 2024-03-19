@@ -12,7 +12,7 @@ spoti = Music(apis.CLIENT_ID, apis.CLIENT_SECRET, apis.REDIRECT_URI, apis.SCOPE,
 gpt = ChatBot(apis.OPENAI_API)
 
 class LoginPage(tk.Tk):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.title("Login Page")
         self.configure(bg="#191414")  # Spotify green
@@ -23,7 +23,7 @@ class LoginPage(tk.Tk):
         
         self.create_widgets()
 
-    def create_widgets(self): 
+    def create_widgets(self) -> None: 
         canvas = tk.Canvas(self, width=self.image.width(), height=self.image.height(), background="#191414", bd=0, highlightthickness=0)
         canvas.create_image(0, 0, anchor=tk.NW, image=self.image)     
         canvas.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
@@ -31,13 +31,13 @@ class LoginPage(tk.Tk):
         login_button = tk.Button(self, text="Login", bg="#008C16", fg="white", width=15, height=2, font=self.def_font, command=self.redirect)  #? Spotify grey
         login_button.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
 
-    def redirect(self):
+    def redirect(self) -> None:
         spoti.authorizeUser()
         self.destroy()
         pass
 
 class ChatPage(tk.Tk):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.title("Playlist Generator")
         self.configure(bg="#191414")  # Spotify green
@@ -84,12 +84,12 @@ class ChatPage(tk.Tk):
             model_menu.place(relx=0.10, rely=0.9, anchor=tk.CENTER)
 
 
-    def create_widgets(self):
+    def create_widgets(self) -> None:
         self.createGPTTextSpace()
         self.createDropdownMenus()
         self.createButtons()
         
-    def generate_answer(self):
+    def generate_answer(self) -> None:
         gpt.model = self.selected_model.get()
         gpt.generateAnswer(spoti.mostListenedArtist(time_interval=self.selected_generation_term.get()))
         self.generated_flag.set(True)
