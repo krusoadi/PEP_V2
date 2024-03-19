@@ -1,7 +1,6 @@
 from openai import OpenAI
 from logManager import LogManager
 
-# TODO Add multiple model options (gpt 3.5/4 turbo)
 # TODO Add a method, for playlist picture generation 
 # TODO Add a method, for loading saved responses and use them for debugging (less tokens used)
 
@@ -65,7 +64,7 @@ class ChatBot:
                 {"role": "assistant", "content": "Travis Scott;SICKO MODE\nBeyonce;Single Ladies\nMacklemore;Can't Hold Us"},
                 {"role": "user", "content": "Can you recommend me 15 songs? Please don't recommend songs from artist, who i listened to earlier, but make sure they are similar, and rap or pop songs too."}
             ],
-            temperature=self.temperature,
+            temperature=self.temperature*1.25,
             top_p=self.top_p,
             n=self.n,
             frequency_penalty=self.frequency_penalty
@@ -92,3 +91,26 @@ class ChatBot:
         self.session_tokens += answer.usage.total_tokens
 
         return answer.choices[0].message.content
+    
+    def generateReturnText(self) -> str:
+        answer = self.client.chat.completions.create(
+            model=self.model,
+            messages=[ 
+                {"role": "system", "content": f"You are a young slangy playlist generator. Your name is Listify Assistant, And you've generated a playlist already, and have to put a text, to return the results. Do not generate song names please."},
+                {"role": "assistant", "content": "Okay, I'm ready with the playlist, here are the songs:\n"},
+            ],
+            temperature=self.temperature*1.25,
+            top_p=self.top_p,
+            n=self.n,
+            frequency_penalty=self.frequency_penalty
+        )
+        self.last_response_tokens = answer.usage.total_tokens
+        self.session_tokens += answer.usage.total_tokens
+        
+        returnString = "" + answer.choices[0].message.content + "\n"
+        
+        for i, element in enumerate(self.artist_and_songs):
+            returnString += f"{element[1]} - {element[0]}\n"
+            
+        return returnString
+        

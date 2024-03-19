@@ -64,7 +64,7 @@ class ChatPage(tk.Tk):
         text_canvas = tk.Canvas(self, width=500, height=400, bg="#F0F0F0", bd=0, highlightthickness=0)
         text_canvas.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
         
-        answer_label = tk.Label(text_canvas, textvariable=self.display_answer, bg="#F0F0F0", fg="black", wraplength=480, font=self.def_font)
+        answer_label = tk.Label(text_canvas, textvariable=self.display_answer, bg="#F0F0F0", fg="black", wraplength=480, font=self.def_font, justify="center")
         answer_label.place(x=10, y=10)
         
     def createDropdownMenus(self) -> None:
@@ -93,7 +93,7 @@ class ChatPage(tk.Tk):
         gpt.model = self.selected_model.get()
         gpt.generateAnswer(spoti.mostListenedArtist(time_interval=self.selected_generation_term.get()))
         self.generated_flag.set(True)
-        self.display_answer.set(gpt.artist_and_songs)
+        self.display_answer.set(gpt.generateReturnText())
 
     def generate_playlist(self): # TODO Finish this function
         spoti.playlist()
