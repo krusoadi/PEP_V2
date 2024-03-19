@@ -4,6 +4,16 @@
 
 This project is made for my Prompt Engineering class at BME. With this project I've learned the basics of Spotipy and Openai python libraries. In this project I'm also learning how to use Github, and Github Copilot efficiently for my studies.
 
+## Time ranges, and models
+
+### Time ranges
+
+The program supports the default Spotify time intervals. The long_term option will get every  listening data made since the creation of the Spotify account. Approximately medium_term uses the last 6 months data, and short_term only uses the last four weeks.
+
+### GPT 3.5 vs GPT4
+
+Right now the program supports the GPT 3.5 Turbo and GPT4 model. The first model is better when we want more genereric, more deterministic answers, it mostly generates popular music made before 2021-22. However the GPT 4 is better at generating lesser-known music, and give as more verbose results. I advise using the GPT 4 model.
+
 ## Used extensions, etc.
 
 ### Comments
