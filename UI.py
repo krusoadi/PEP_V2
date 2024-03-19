@@ -96,7 +96,8 @@ class ChatPage(tk.Tk):
         self.display_answer.set(gpt.generateReturnText())
 
     def generate_playlist(self): # TODO Finish this function
-        spoti.playlist(picture_path="tester_optimized.jpeg") #gpt.generateImage("Music with headphones", "firstTest") 
+        spoti._setTimestamp()
+        spoti.playlist(picture_path=gpt.generateImage("Music with headphones", f"playlist_image") ) #
         spoti.addSongToPlaylist(song_uri=spoti.getSongIdByName(gpt.artist_and_songs))
 
 
