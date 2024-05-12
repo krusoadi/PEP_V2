@@ -7,6 +7,7 @@ from logManager import LogManager
 from tkinter import ttk
 
 #TODO COMMENT THE CODE AND REVIEW IT!!!
+#TODO rendet rakni a mappaban, felkesziteni a feltoltesre
 
 logger = LogManager()
 spoti = Music(apis.CLIENT_ID, apis.CLIENT_SECRET, apis.REDIRECT_URI, apis.SCOPE, logger=logger)

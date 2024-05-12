@@ -1,7 +1,7 @@
 from os import path
 import time
 
-#TODO Commenting and making new methods
+#TODO Commenting or maybe excluding this class from the final version
 
 class LogManager:
     def __init__(self) -> None:

@@ -9,6 +9,7 @@ from time import sleep
 class Music:
     '''Spotify Music platform. at intialization it needs a client_id, client_secret, redirect_uri, scope and a logger.'''
     def __init__(self, client_id: str, client_secret: str, redirect_uri: str, scope: list[str], logger:LogManager) -> None:
+        
         #? Client variables
         self.client= None 
         self.client_id= client_id
@@ -28,6 +29,7 @@ class Music:
     
     def _setClient(self, auth: SpotifyOAuth) -> None:
         '''Private method to create a client with the given authorizer, and to check if it was successful.'''
+        
         try:
             self.client = Spotify(auth_manager=auth)
             self.is_authorized = True
@@ -37,6 +39,7 @@ class Music:
         
     def authorizeUser(self) -> None:
         '''This method opens a webbrowser, and authorizes the user to use the Spotify API. It also sets the client, with the new user.'''
+        
         authorizer = SpotifyOAuth(client_id=self.client_id,
                             client_secret=self.client_secret,
                             redirect_uri=self.redirect_uri,
@@ -68,21 +71,20 @@ class Music:
     
     def _loadCustomPlaylistPicture(self, path: str) -> str:
         '''Private method, loads the picture from the given path, and returns it in base64 format.'''
+        
         try:
             with open(path, 'rb') as image_file:
                 base64_bytes = base64.b64encode(image_file.read())
                 base64_string = base64_bytes.decode()
             time.sleep(5)
             return base64_string
-            
-        
-        
         except FileNotFoundError:
             self.logger.logEvent(f"(Minor Error) Picture not found at: {path}\n")
             return self._loadDefaultPicture()
         
     def _loadDefaultPicture(self) -> str:
         '''Private method, loads the default picture for the playlist.'''
+        
         with open('picture1.jpeg', 'rb') as image_file:
             base64_bytes = base64.b64encode(image_file.read())
             base64_string = base64_bytes.decode()
@@ -93,8 +95,6 @@ class Music:
     
     def _setPlaylistPicture(self, path: str = None) -> None:
         '''Private method, sets the picture of the playlist to the given base64 string. If no string is given, it will use the default picture.'''
-        
-        
         
         if path == None:
             base64_string = self._loadDefaultPicture()
@@ -110,6 +110,7 @@ class Music:
             
     def addSongToPlaylist(self, song_uri: str | list[str]) -> None:
         '''Adds a song to the playlist. If the song_uri is a list, it will add all the songs in the list. If the song_uri is a string, it will add the song with the given uri.'''
+        
         if song_uri != None:
             try:
                 self.client.playlist_add_items(playlist_id=self.playlist_id, items=song_uri)
@@ -118,6 +119,7 @@ class Music:
                 
     def playlist(self, name: str = None, picture_path: str = None, song_id: str | list[str] = None, description: str = None) -> None:
         '''This method creates a playlist with the given name, description and picture. If no name is given, it will be named "New playlist made by AI (at {current_time})" and if no description is given, it will be "This was made by my prompt engineering AI project. my Github page:'''
+        
         self._makePlaylist(name, description)
         
         if song_id != None:
@@ -138,6 +140,7 @@ class Music:
     
     def getSongIdByName(self, parsed_gpt_response: list[str]) -> str: #TODO torolni
         '''Gets a list of two strings, the first one is the artist and the second one is the song. Returns a string, which contains the song's Spotify ID.'''
+        
         query = f"track:{parsed_gpt_response[0]} artist:{parsed_gpt_response[1]}"
         results = self.client.search(q=query, type='track')
         

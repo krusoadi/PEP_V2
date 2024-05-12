@@ -6,6 +6,7 @@ from PIL import Image
 
 class ChatBot:
     def __init__(self, API_KEY: str) -> None:
+        
         #? Client
         self.client = OpenAI(api_key=API_KEY)
         
@@ -132,6 +133,3 @@ class ChatBot:
         file.close()
         remove(name)
         return f"images\\{filename}_optimized.jpeg" 
-
-
-        
