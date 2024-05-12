@@ -4,8 +4,6 @@ import urllib.request
 from os import path, mkdir, remove
 from PIL import Image
 
-# TODO Add a method, for playlist picture generation 
-
 class ChatBot:
     def __init__(self, API_KEY: str) -> None:
         #? Client
@@ -57,7 +55,7 @@ class ChatBot:
             file.write(self.last_full_response.choices[0].message.content)
             file.write(f"\n\n--------session token usage: {self.session_tokens}--------------------\n")
     
-    def generateAnswer(self, most_listened_artists) -> None: #! This needs to be made to multiple methods, with function overloading
+    def generateAnswer(self, most_listened_artists) -> None:
         self.last_full_response = self.client.chat.completions.create(
             model=self.model,
             messages=[ 

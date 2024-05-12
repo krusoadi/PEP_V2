@@ -66,7 +66,7 @@ class Music:
         playlist = self.client.user_playlist_create(self.client.current_user()["id"], name, True, False, description)
         self.playlist_id = playlist["id"]
     
-    def _loadCustomPlaylistPicture(self, path: str) -> str: # ! Valami baj van itt
+    def _loadCustomPlaylistPicture(self, path: str) -> str:
         '''Private method, loads the picture from the given path, and returns it in base64 format.'''
         try:
             with open(path, 'rb') as image_file:
@@ -91,7 +91,7 @@ class Music:
 
         return base64_string
     
-    def _setPlaylistPicture(self, path: str = None) -> None: # TODO meg nem tokeletes
+    def _setPlaylistPicture(self, path: str = None) -> None:
         '''Private method, sets the picture of the playlist to the given base64 string. If no string is given, it will use the default picture.'''
         
         
@@ -104,7 +104,7 @@ class Music:
         #? Error Handling
         
         try:
-            self.client.playlist_upload_cover_image(self.playlist_id, base64_string) # TODO Talan asyncio-val meg lehet oldani
+            self.client.playlist_upload_cover_image(self.playlist_id, base64_string)
         except Exception as e:
             self.logger.logEvent(f"(Minor Error) Picture upload failed (Ex.: {e})\n")
             
@@ -136,7 +136,7 @@ class Music:
         
         return most_listened
     
-    def getSongIdByName(self, parsed_gpt_response: list[str]) -> str: # !! Still missing the error handling and have bugs maybe it should be deleted
+    def getSongIdByName(self, parsed_gpt_response: list[str]) -> str: #TODO torolni
         '''Gets a list of two strings, the first one is the artist and the second one is the song. Returns a string, which contains the song's Spotify ID.'''
         query = f"track:{parsed_gpt_response[0]} artist:{parsed_gpt_response[1]}"
         results = self.client.search(q=query, type='track')
@@ -146,7 +146,7 @@ class Music:
             return parsed_gpt_response
         except IndexError:
             self.logger.logEvent(f"(Minor Error) Song not found: {parsed_gpt_response} (Song won't be in the playlist)\n")
-            return None # !! This is the problem, it should return a string, but it returns None   
+            return None  
         
     def getSongIdByName(self, parsed_gpt_response: list[list[str]]) -> str:
         '''Gets a list of two strings, the first one is the artist and the second one is the song. Returns a string, which contains the song's Spotify ID.'''
@@ -159,7 +159,7 @@ class Music:
             
             try:
                 local_parsed_response[i] = results['tracks']['items'][0]['uri']
-            except IndexError: # !! Ilyen mintajura kell a stringes getSongIdByName-t (egy zeneset)
+            except IndexError:
                 self.logger.logEvent(f"(Minor Error) Song not found: {local_parsed_response[i]} (Song won't be in the playlist)\n")
                 pass
         
@@ -167,12 +167,4 @@ class Music:
             if type(element) is not str:
                 local_parsed_response.remove(element)
         
-        return local_parsed_response    
-
-# TODO potentially better code for the getSongIdByName method needs to be tested and implemented
-"""        parsed_gpt_response = results.get('tracks', {}).get('items', [])
-        if parsed_gpt_response:
-            return parsed_gpt_response[0]['id']
-        else:
-            return None
-"""
+        return local_parsed_response

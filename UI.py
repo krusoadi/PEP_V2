@@ -6,7 +6,8 @@ import apis
 from logManager import LogManager
 from tkinter import ttk
 
-# TODO Making answer display better and commenting the code
+#TODO COMMENT THE CODE AND REVIEW IT!!!
+
 logger = LogManager()
 spoti = Music(apis.CLIENT_ID, apis.CLIENT_SECRET, apis.REDIRECT_URI, apis.SCOPE, logger=logger)
 gpt = ChatBot(apis.OPENAI_API)
