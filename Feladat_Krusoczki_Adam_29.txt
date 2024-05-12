@@ -14,7 +14,6 @@ A házi során a Dall-E 2.-t is használtam, a program ikonját ezzel generálta
 generál egy pixelart képet az első előadóról.
 
 A házihoz tartozó Github repository: https://github.com/krusoadi/PEP_V2
-
-
+Képek a programról futás közben a github repository-ban találhatóak, a \photos mappában.
 
 
