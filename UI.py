@@ -67,9 +67,10 @@ class ChatPage(tk.Tk):
         answer_label = tk.Label(text_canvas, textvariable=self.display_answer, bg="#F0F0F0", fg="black", wraplength=480, font=self.def_font, justify="center")
         answer_label.place(x=10, y=10)
         
+        
     def createDropdownMenus(self) -> None:
             generation_terms_options = apis.TIME_RANGE.copy()
-            model_options = ["gpt-3.5-turbo", "gpt-4-0125-preview"]
+            model_options = ["gpt-4-0125-preview", "gpt-3.5-turbo"]
 
             self.selected_generation_term = tk.StringVar(self)
             self.selected_model = tk.StringVar(self)
