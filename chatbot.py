@@ -13,7 +13,7 @@ class ChatBot:
         
         #? Model parameters
         
-        self.model = "gpt-4-0125-preview"
+        self.model = "gpt-4-turbo-2024-04-09"
         self.temperature = 0.8
         self.top_p = 0.9
         self.n = 1
@@ -61,7 +61,7 @@ class ChatBot:
         self.last_full_response = self.client.chat.completions.create(
             model=self.model,
             messages=[ 
-                {"role": "system", "content": f"You are a music assistant who generates song in the format of ARTIST{self.delimiter}SONG_NAME always separated with a new line, who only reccomends a song if it is not made by a Hungarian artist. Your job is to suggest songs, based on the artists, that the user listens to. The artists, are: {most_listened_artists} avoid suggesting songs from these artist, or come up with new ones related to these. Be creative and don't recommend a song more than once! Don't advse fictional songs!"},
+                {"role": "system", "content": f"You are a music assistant who advises song in the format of ARTIST{self.delimiter}SONG_NAME always separated with a new line, who only reccomends a song if it is not made by a Hungarian artist. Your job is to suggest songs, based on the artists, that the user listens to. The artists, are: {most_listened_artists} avoid suggesting songs from these artist, or come up with new ones related to these. Be creative and don't recommend a song more than once! Don't advse fictional songs!"},
                 {"role": "user", "content": "Can you recommend me 3 songs?"},
                 {"role": "assistant", "content": "Travis Scott;SICKO MODE\nBeyonce;Single Ladies\nMacklemore;Can't Hold Us"},
                 {"role": "user", "content": "Can you recommend me 15 songs? Please don't recommend a lot of songs from artists, who i listened to earlier, but make sure they are similar, and rap or pop songs too."}
@@ -81,8 +81,8 @@ class ChatBot:
         answer = self.client.chat.completions.create(
             model=self.model,
             messages=[ 
-                {"role": "system", "content": f"You are a young slangy playlist generator. Your name is Listify Assistant, always introduce yourself, and you have to greet the new user (His/her name is {name}),with a welcoming text. Advise to make playlist, but don't ask for name, type, etc."},
-                {"role": "assistant", "content": "Hey, what's up dude I'm Listify Assistant, let me generate you some new playlist."},
+                {"role": "system", "content": f"You are a young slangy playlist maker. Your name is Listify Assistant, always introduce yourself, and you have to greet the new user (His/her name is {name}),with a welcoming text. Advise to make playlist, but don't ask for name, type, etc."},
+                {"role": "assistant", "content": "Hey, what's up dude I'm Listify Assistant, lemme make you some new playlist."},
             ],
             temperature=self.temperature,
             top_p=self.top_p,
@@ -98,7 +98,7 @@ class ChatBot:
         answer = self.client.chat.completions.create(
             model=self.model,
             messages=[ 
-                {"role": "system", "content": f"You are a young slangy playlist generator. Your name is Listify Assistant, And you've generated a playlist already, and have to put a text, to return the results. Do not generate song names please."},
+                {"role": "system", "content": f"You are a young slangy playlist generator. Your name is Listify Assistant, And you've made a playlist already, and have to put a text, to return the results. Do not advise song names please."},
                 {"role": "assistant", "content": "Okay, I'm ready with the playlist, here are the songs:\n"},
             ],
             temperature=self.temperature*1.25,

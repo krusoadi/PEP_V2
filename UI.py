@@ -91,11 +91,9 @@ class ChatPage(tk.Tk):
 
         scrollbar.config(command=answer_text.yview)
         
-     
-        
     def createDropdownMenus(self) -> None:
             generation_terms_options = apis.TIME_RANGE.copy()
-            model_options = ["gpt-4-0125-preview", "gpt-3.5-turbo"]
+            model_options = ["gpt-4-turbo-2024-04-09", "gpt-3.5-turbo"]
 
             self.selected_generation_term = tk.StringVar(self)
             self.selected_model = tk.StringVar(self)
@@ -133,6 +131,7 @@ class ChatPage(tk.Tk):
         gpt.generateAnswer(spoti.mostListenedArtist(time_interval=self.selected_generation_term.get()))
         self.generated_flag.set(True)
         self.display_answer.set(gpt.generateReturnText())
+        
 
     def generate_playlist(self): 
         spoti._setTimestamp()
