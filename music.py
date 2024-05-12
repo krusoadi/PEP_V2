@@ -4,6 +4,7 @@ import webbrowser
 import time
 import base64
 from logManager import LogManager
+from time import sleep
 
 class Music:
     '''Spotify Music platform. at intialization it needs a client_id, client_secret, redirect_uri, scope and a logger.'''
@@ -65,13 +66,16 @@ class Music:
         playlist = self.client.user_playlist_create(self.client.current_user()["id"], name, True, False, description)
         self.playlist_id = playlist["id"]
     
-    def _loadCustomPlaylistPicture(self, path: str) -> str: # ! Valami a baaj itt
+    def _loadCustomPlaylistPicture(self, path: str) -> str: # ! Valami baj van itt
         '''Private method, loads the picture from the given path, and returns it in base64 format.'''
         try:
             with open(path, 'rb') as image_file:
                 base64_bytes = base64.b64encode(image_file.read())
                 base64_string = base64_bytes.decode()
+            time.sleep(5)
             return base64_string
+            
+        
         
         except FileNotFoundError:
             self.logger.logEvent(f"(Minor Error) Picture not found at: {path}\n")
@@ -83,10 +87,15 @@ class Music:
             base64_bytes = base64.b64encode(image_file.read())
             base64_string = base64_bytes.decode()
 
+        time.sleep(5)
+
         return base64_string
     
     def _setPlaylistPicture(self, path: str = None) -> None: # TODO meg nem tokeletes
         '''Private method, sets the picture of the playlist to the given base64 string. If no string is given, it will use the default picture.'''
+        
+        
+        
         if path == None:
             base64_string = self._loadDefaultPicture()
         else:

@@ -5,7 +5,6 @@ from os import path, mkdir, remove
 from PIL import Image
 
 # TODO Add a method, for playlist picture generation 
-# TODO Add a method, for loading saved responses and use them for debugging (less tokens used)
 
 class ChatBot:
     def __init__(self, API_KEY: str) -> None:
@@ -14,8 +13,8 @@ class ChatBot:
         
         #? Model parameters
         
-        self.model = "gpt-3.5-turbo" #"gpt-4-0125-preview"
-        self.temperature = 0.7
+        self.model = "gpt-4-0125-preview"
+        self.temperature = 0.8
         self.top_p = 0.9
         self.n = 1
         self.frequency_penalty = 0.8
@@ -62,10 +61,10 @@ class ChatBot:
         self.last_full_response = self.client.chat.completions.create(
             model=self.model,
             messages=[ 
-                {"role": "system", "content": f"You are a music assistant who generates song in the format of ARTIST{self.delimiter}SONG_NAME always separated with a new line, who only reccomends a song if it is not made by a Hungarian artist. Your job is to suggest songs, based on the artists, that the user listens to.The artists, are: {most_listened_artists} you can't suggest songs from these artist, you always come up with new ones related to these. Be creative and don't recommend a song more than once!"},
+                {"role": "system", "content": f"You are a music assistant who generates song in the format of ARTIST{self.delimiter}SONG_NAME always separated with a new line, who only reccomends a song if it is not made by a Hungarian artist. Your job is to suggest songs, based on the artists, that the user listens to.The artists, are: {most_listened_artists} you can suggest songs from these artist, or come up with new ones related to these. Be creative and don't recommend a song more than once!"},
                 {"role": "user", "content": "Can you recommend me 3 songs?"},
                 {"role": "assistant", "content": "Travis Scott;SICKO MODE\nBeyonce;Single Ladies\nMacklemore;Can't Hold Us"},
-                {"role": "user", "content": "Can you recommend me 15 songs? Please don't recommend songs from artist, who i listened to earlier, but make sure they are similar, and rap or pop songs too."}
+                {"role": "user", "content": "Can you recommend me 10 songs? Please don't recommend a lot of songs from artists, who i listened to earlier, but make sure they are similar, and rap or pop songs too."}
             ],
             temperature=self.temperature*1.25,
             top_p=self.top_p,
@@ -82,7 +81,7 @@ class ChatBot:
         answer = self.client.chat.completions.create(
             model=self.model,
             messages=[ 
-                {"role": "system", "content": f"You are a young slangy playlist generator. Your name is Listify Assistant, always introduce yourself, and you have to greet the new user (His/her name is {name}),with a welcoming text. Advise to make playlist."},
+                {"role": "system", "content": f"You are a young slangy playlist generator. Your name is Listify Assistant, always introduce yourself, and you have to greet the new user (His/her name is {name}),with a welcoming text. Advise to make playlist, but don't ask for name, type, etc."},
                 {"role": "assistant", "content": "Hey, what's up dude I'm Listify Assistant, let me generate you some new playlist."},
             ],
             temperature=self.temperature,
@@ -131,7 +130,7 @@ class ChatBot:
 
         urllib.request.urlretrieve(url, name)
         file = Image.open(name)
-        file.save(f"images\\{filename}_optimized.jpeg", "JPEG", optimize=True, quality=85)
+        file.save(f"images\\{filename}_optimized.jpeg", "JPEG", optimize=True, quality=75)
         file.close()
         remove(name)
         return f"images\\{filename}_optimized.jpeg" 

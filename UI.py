@@ -49,6 +49,7 @@ class ChatPage(tk.Tk):
         
         self.display_answer = tk.StringVar(self, "")
         self.display_answer.set(gpt.generateWelcomeText(spoti.getUserName()))
+        self.generate_image_flag = tk.BooleanVar(self, True)
     
         self.create_widgets()
 
@@ -78,17 +79,30 @@ class ChatPage(tk.Tk):
             self.selected_generation_term.set(generation_terms_options[1])
             self.selected_model.set(model_options[0])
 
-            generation_terms_menu = ttk.Combobox(self, textvariable=self.selected_generation_term, values=generation_terms_options)
-            model_menu = ttk.Combobox(self, textvariable=self.selected_model, values=model_options)
+            style = ttk.Style()
+            style.configure('TCombobox', font=self.def_font)
+
+
+            generation_terms_menu = ttk.Combobox(self, textvariable=self.selected_generation_term, values=generation_terms_options, style="TCombobox", state="readonly")
+            model_menu = ttk.Combobox(self, textvariable=self.selected_model, values=model_options, style="TCombobox", state="readonly")
 
             generation_terms_menu.place(relx=0.10, rely=0.85, anchor=tk.CENTER)
             model_menu.place(relx=0.10, rely=0.9, anchor=tk.CENTER)
+
+    def createCheckbox(self) -> None:      
+        style = ttk.Style()
+        style.configure('TCheckbutton', background="#191414", font=self.def_font, foreground="white")
+        
+        generate_image_checkbox = ttk.Checkbutton(self, text="Generate Image", style="TCheckbutton", variable=self.generate_image_flag)
+        generate_image_checkbox.place(relx=0.1, rely=0.8, anchor=tk.CENTER)
 
 
     def create_widgets(self) -> None:
         self.createGPTTextSpace()
         self.createDropdownMenus()
+        self.createCheckbox()
         self.createButtons()
+
         
     def generate_answer(self) -> None:
         gpt.model = self.selected_model.get()
@@ -96,10 +110,16 @@ class ChatPage(tk.Tk):
         self.generated_flag.set(True)
         self.display_answer.set(gpt.generateReturnText())
 
-    def generate_playlist(self): # TODO Finish this function
+    def generate_playlist(self): 
         spoti._setTimestamp()
-        spoti.playlist(picture_path=gpt.generateImage("Music with headphones", f"testImage"))
-        spoti.addSongToPlaylist(song_uri=spoti.getSongIdByName(gpt.artist_and_songs))
+        prompt = f"A pixelart of {gpt.artist_and_songs[0][1]}"
+        
+        if self.generate_image_flag.get() == False:
+            spoti.playlist()
+            spoti.addSongToPlaylist(song_uri=spoti.getSongIdByName(gpt.artist_and_songs))
+        else:
+            spoti.playlist(picture_path=gpt.generateImage(prompt, f"Playlist_image_{spoti.last_timestamp}.png"))
+            spoti.addSongToPlaylist(song_uri=spoti.getSongIdByName(gpt.artist_and_songs))
 
 
 if __name__ == "__main__":
