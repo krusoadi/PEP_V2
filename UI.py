@@ -11,6 +11,24 @@ logger = LogManager()
 spoti = Music(apis.CLIENT_ID, apis.CLIENT_SECRET, apis.REDIRECT_URI, apis.SCOPE, logger=logger)
 gpt = ChatBot(apis.OPENAI_API)
 
+class TextWithVar(tk.Text):
+    def __init__(self, master=None, textvariable=None, **kwargs):
+        super().__init__(master, **kwargs)
+        self._textvariable = textvariable
+        if textvariable is not None:
+            self._textvariable.trace("w", self._update_text)
+            self._update_text()
+
+    def _update_text(self, *args):
+        self.config(state=tk.NORMAL)
+        self.delete(1.0, tk.END)
+        self.insert(tk.END, self._textvariable.get())
+        self.tag_configure("center", justify='center')
+        self.tag_add("center", 1.0, "end")
+        self.config(state=tk.DISABLED)
+
+
+
 class LoginPage(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
@@ -64,10 +82,16 @@ class ChatPage(tk.Tk):
     def createGPTTextSpace(self) -> None:
         text_canvas = tk.Canvas(self, width=500, height=400, bg="#F0F0F0", bd=0, highlightthickness=0)
         text_canvas.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
+
+        scrollbar = tk.Scrollbar(text_canvas)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+        answer_text = TextWithVar(text_canvas, textvariable=self.display_answer, yscrollcommand=scrollbar.set, bg="#F0F0F0", fg="black", wrap=tk.WORD, font=self.def_font, width=60, height=15, state=tk.DISABLED)
+        answer_text.pack(side=tk.LEFT, fill=tk.BOTH)
+
+        scrollbar.config(command=answer_text.yview)
         
-        answer_label = tk.Label(text_canvas, textvariable=self.display_answer, bg="#F0F0F0", fg="black", wraplength=480, font=self.def_font, justify="center")
-        answer_label.place(x=10, y=10)
-        
+     
         
     def createDropdownMenus(self) -> None:
             generation_terms_options = apis.TIME_RANGE.copy()

@@ -61,10 +61,10 @@ class ChatBot:
         self.last_full_response = self.client.chat.completions.create(
             model=self.model,
             messages=[ 
-                {"role": "system", "content": f"You are a music assistant who generates song in the format of ARTIST{self.delimiter}SONG_NAME always separated with a new line, who only reccomends a song if it is not made by a Hungarian artist. Your job is to suggest songs, based on the artists, that the user listens to.The artists, are: {most_listened_artists} you can suggest songs from these artist, or come up with new ones related to these. Be creative and don't recommend a song more than once!"},
+                {"role": "system", "content": f"You are a music assistant who generates song in the format of ARTIST{self.delimiter}SONG_NAME always separated with a new line, who only reccomends a song if it is not made by a Hungarian artist. Your job is to suggest songs, based on the artists, that the user listens to. The artists, are: {most_listened_artists} avoid suggesting songs from these artist, or come up with new ones related to these. Be creative and don't recommend a song more than once! Don't advse fictional songs!"},
                 {"role": "user", "content": "Can you recommend me 3 songs?"},
                 {"role": "assistant", "content": "Travis Scott;SICKO MODE\nBeyonce;Single Ladies\nMacklemore;Can't Hold Us"},
-                {"role": "user", "content": "Can you recommend me 10 songs? Please don't recommend a lot of songs from artists, who i listened to earlier, but make sure they are similar, and rap or pop songs too."}
+                {"role": "user", "content": "Can you recommend me 15 songs? Please don't recommend a lot of songs from artists, who i listened to earlier, but make sure they are similar, and rap or pop songs too."}
             ],
             temperature=self.temperature*1.25,
             top_p=self.top_p,

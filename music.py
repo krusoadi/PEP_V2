@@ -151,21 +151,23 @@ class Music:
     def getSongIdByName(self, parsed_gpt_response: list[list[str]]) -> str:
         '''Gets a list of two strings, the first one is the artist and the second one is the song. Returns a string, which contains the song's Spotify ID.'''
         
-        for i, element in enumerate(parsed_gpt_response):
+        local_parsed_response = parsed_gpt_response.copy()
+        
+        for i, element in enumerate(local_parsed_response):
             query = f"track:{element[0]} artist:{element[1]}"
             results = self.client.search(q=query, type='track')
             
             try:
-                parsed_gpt_response[i] = results['tracks']['items'][0]['uri']
+                local_parsed_response[i] = results['tracks']['items'][0]['uri']
             except IndexError: # !! Ilyen mintajura kell a stringes getSongIdByName-t (egy zeneset)
-                self.logger.logEvent(f"(Minor Error) Song not found: {parsed_gpt_response[i]} (Song won't be in the playlist)\n")
+                self.logger.logEvent(f"(Minor Error) Song not found: {local_parsed_response[i]} (Song won't be in the playlist)\n")
                 pass
         
-        for i, element in enumerate(parsed_gpt_response):
+        for i, element in enumerate(local_parsed_response):
             if type(element) is not str:
-                parsed_gpt_response.remove(element)
+                local_parsed_response.remove(element)
         
-        return parsed_gpt_response    
+        return local_parsed_response    
 
 # TODO potentially better code for the getSongIdByName method needs to be tested and implemented
 """        parsed_gpt_response = results.get('tracks', {}).get('items', [])
