@@ -155,11 +155,3 @@ class MainPage(tk.Tk):
         else:
             spoti.playlist(picture_path=gpt.generateImage(prompt, f"Playlist_image"))
             spoti.addSongToPlaylist(song_uri=spoti.getSongIdByName(gpt.artist_and_songs))
-
-
-if __name__ == "__main__":
-    app = LoginPage()
-    app.mainloop()
-    if spoti.is_authorized == True:
-        app = MainPage()
-        app.mainloop()
