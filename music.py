@@ -11,7 +11,7 @@ class Music:
     def __init__(self, client_id: str, client_secret: str, redirect_uri: str, scope: list[str], logger:LogManager) -> None:
         
         #? Client variables
-        self.client= None 
+        self.client = None 
         self.client_id= client_id
         self.client_secret = client_secret
         self.redirect_uri = redirect_uri
@@ -48,6 +48,7 @@ class Music:
         auth_url = authorizer.get_authorize_url()
         webbrowser.open(auth_url)
         self._setClient(authorizer)
+        
     def getUserName(self) -> str:
         """This method returns the current users name."""
         return self.client.me()["display_name"]
@@ -64,7 +65,7 @@ class Music:
             name = f"New playlist made by AI (at {self.last_timestamp})"
 
         if description == None:
-            description = "This was made by my prompt engineering AI project. my Github page: https://github.com/krusoadi"
+            description = "This was made by my prompt engineering AI project. My Github page: https://github.com/krusoadi"
 
         playlist = self.client.user_playlist_create(self.client.current_user()["id"], name, True, False, description)
         self.playlist_id = playlist["id"]
@@ -73,10 +74,10 @@ class Music:
         '''Private method, loads the picture from the given path, and returns it in base64 format.'''
         
         try:
-            with open(path, 'rb') as image_file:
+            with open(path, 'rb') as image_file: #? Reading in the image file in base 64
                 base64_bytes = base64.b64encode(image_file.read())
                 base64_string = base64_bytes.decode()
-            time.sleep(5)
+            time.sleep(5) #? It needs a little time to load the picture.
             return base64_string
         except FileNotFoundError:
             self.logger.logEvent(f"(Minor Error) Picture not found at: {path}\n")
@@ -85,11 +86,11 @@ class Music:
     def _loadDefaultPicture(self) -> str:
         '''Private method, loads the default picture for the playlist.'''
         
-        with open('picture1.jpeg', 'rb') as image_file:
+        with open('picture1.jpeg', 'rb') as image_file: #? Reading in the image file in base 64
             base64_bytes = base64.b64encode(image_file.read())
             base64_string = base64_bytes.decode()
 
-        time.sleep(5)
+        time.sleep(5) #? It needs a little time to load the picture.
 
         return base64_string
     
@@ -104,13 +105,13 @@ class Music:
         #? Error Handling
         
         try:
-            self.client.playlist_upload_cover_image(self.playlist_id, base64_string)
+            self.client.playlist_upload_cover_image(self.playlist_id, base64_string) #? Uploading the picture to the playlist
         except Exception as e:
             self.logger.logEvent(f"(Minor Error) Picture upload failed (Ex.: {e})\n")
             
     def addSongToPlaylist(self, song_uri: str | list[str]) -> None:
         '''Adds a song to the playlist. If the song_uri is a list, it will add all the songs in the list. If the song_uri is a string, it will add the song with the given uri.'''
-        
+        #? The song_uri can be a string or a list of strings, it's the spotifys own id for the song.
         if song_uri != None:
             try:
                 self.client.playlist_add_items(playlist_id=self.playlist_id, items=song_uri)
@@ -127,8 +128,8 @@ class Music:
            
         self._setPlaylistPicture(picture_path)
     
-    def mostListenedArtist(self, time_interval: str = "long_term", top_n: int = 5) -> list[str]:
-        '''Returns the top n most listened artists in the given time interval. The default time interval is "long_term" and the default n is 5. The time interval can be "short_term", "medium_term" or "long_term" and the n can be any positive integer.'''
+    def mostListenedArtist(self, time_interval: str = "long_term", top_n: int = 8) -> list[str]:
+        '''Returns the top n most listened artists in the given time interval. The default time interval is "long_term" and the default n is 8. The time interval can be "short_term", "medium_term" or "long_term" and the n can be any positive integer.'''
         
         top_artists = self.client.current_user_top_artists(limit=top_n, time_range=time_interval)
         most_listened = []
@@ -141,20 +142,20 @@ class Music:
     def getSongIdByName(self, parsed_gpt_response: list[str]) -> str: #TODO torolni
         '''Gets a list of two strings, the first one is the artist and the second one is the song. Returns a string, which contains the song's Spotify ID.'''
         
-        query = f"track:{parsed_gpt_response[0]} artist:{parsed_gpt_response[1]}"
+        query = f"track:{parsed_gpt_response[0]} artist:{parsed_gpt_response[1]}" #? Spotify search query syntax
         results = self.client.search(q=query, type='track')
         
         try:
             parsed_gpt_response = results['tracks']['items'][0]['uri']
             return parsed_gpt_response
-        except IndexError:
+        except IndexError: #? IndexError happens when we couldn't find the song, because it returns and empty list.
             self.logger.logEvent(f"(Minor Error) Song not found: {parsed_gpt_response} (Song won't be in the playlist)\n")
             return None  
         
     def getSongIdByName(self, parsed_gpt_response: list[list[str]]) -> str:
         '''Gets a list of two strings, the first one is the artist and the second one is the song. Returns a string, which contains the song's Spotify ID.'''
         
-        local_parsed_response = parsed_gpt_response.copy()
+        local_parsed_response = parsed_gpt_response.copy() #? copying is essential, because the loop changes the elements of the list.
         
         for i, element in enumerate(local_parsed_response):
             query = f"track:{element[0]} artist:{element[1]}"
@@ -170,4 +171,4 @@ class Music:
             if type(element) is not str:
                 local_parsed_response.remove(element)
         
-        return local_parsed_response
+        return local_parsed_response #? Returning the list of song ids.

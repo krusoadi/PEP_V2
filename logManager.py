@@ -1,11 +1,11 @@
 from os import path
 import time
 
-#TODO Commenting or maybe excluding this class from the final version
+#? Made this really simple logger, for tracing errors. 
 
 class LogManager:
     def __init__(self) -> None:
-        #Constructor
+        #? Constructor
         if path.exists("events.log"):
             self.log = open("events.log", "a", encoding="utf-8")
         else:
@@ -16,7 +16,7 @@ class LogManager:
         self.callCounter = 0
 
     def __del__(self) -> None:
-        #Destructor
+        #? Destructor
         if self.callCounter == 0:
             self.log.write("No errors in this session\n")
         self.log.write(f"---------------Log destruct at: {time.ctime()}\n")

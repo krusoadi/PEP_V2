@@ -6,14 +6,13 @@ from PIL import Image
 
 class ChatBot:
     def __init__(self, API_KEY: str) -> None:
-        
         #? Client
         self.client = OpenAI(api_key=API_KEY)
         
         #? Model parameters
         
-        self.model = "gpt-4-turbo-2024-04-09"
-        self.temperature = 0.8
+        self.model = "gpt-4-turbo-2024-04-09" #? This model gives, the best output.
+        self.temperature = 0.8 #? High temperature is needed, for more verbose outputs.
         self.top_p = 0.9
         self.n = 1
         self.frequency_penalty = 0.8
@@ -27,7 +26,7 @@ class ChatBot:
         self.session_tokens = 0
     
     def _answerParser(self, split_char: str = ";") -> None:
-        '''This function parses the text into the desired format'''
+        '''This function parses the text into the desired format, what we will need to use for the spotipy API. It splits the text by the given character, and creates a list of lists, where the first element is the song, and the second is the artist.'''
         
         un_parsed_answer = self.last_full_response.choices[0].message.content.split("\n")
         self.artist_and_songs = []
@@ -44,7 +43,7 @@ class ChatBot:
             self.artist_and_songs.append([un_parsed_answer[i][1], un_parsed_answer[i][0]])
             
     def _autoSave(self) -> None: 
-        '''This function saves the last response into a file'''
+        '''This function saves the last response into a file.'''
         
         with open("responses.txt", "a", encoding="utf-8") as file:
             file.write(f"\n\n--------------used_tokens: {self.last_response_tokens}---------------\n")
@@ -56,7 +55,8 @@ class ChatBot:
             file.write(self.last_full_response.choices[0].message.content)
             file.write(f"\n\n--------session token usage: {self.session_tokens}--------------------\n")
     
-    def generateAnswer(self, most_listened_artists) -> None:
+    def generateAnswer(self, most_listened_artists, debugmode: bool = False) -> None:
+        '''This function generates the songs, based on the given parameters. It uses the OpenAI API to generate the response. The response is then parsed, and saved into a file, if the debugmode is True.'''
         self.last_full_response = self.client.chat.completions.create(
             model=self.model,
             messages=[ 
@@ -70,13 +70,16 @@ class ChatBot:
             n=self.n,
             frequency_penalty=self.frequency_penalty
         )
+        
         self.last_response_tokens = self.last_full_response.usage.completion_tokens
         self.session_tokens += self.last_response_tokens
         
         self._answerParser()
-        self._autoSave() 
+        if debugmode: #? We only need to save the responses, when we are in debug mode.
+            self._autoSave() 
     
     def generateWelcomeText(self, name: str) -> str:
+        '''This function generates the welcome text for the user. It uses the OpenAI API to generate the response.'''
         answer = self.client.chat.completions.create(
             model=self.model,
             messages=[ 
@@ -88,12 +91,14 @@ class ChatBot:
             n=self.n,
             frequency_penalty=self.frequency_penalty
         )
+        
         self.last_response_tokens = answer.usage.total_tokens
         self.session_tokens += answer.usage.total_tokens
 
         return answer.choices[0].message.content
     
     def generateReturnText(self) -> str:
+        '''This function generates a text to present the generated songs.'''
         answer = self.client.chat.completions.create(
             model=self.model,
             messages=[ 
@@ -116,20 +121,23 @@ class ChatBot:
         return returnString
     
     def generateImage(self, prompt:str, filename:str, debug_mode:bool = False) -> str:
+        '''This function generates an image for the spoitfy playlist, if debugmode is on.'''
         if debug_mode:
              return f"images\\{filename}.jpeg"
         
         resp = self.client.images.generate(prompt= prompt, model="dall-e-2", size="256x256", n=1, response_format="url")
         url = resp.data[0].url
         
-        if not path.isdir("images"):
+        if not path.isdir("images"): 
             mkdir("images")
 
         name = f"images\\{filename}.jpeg"
 
-        urllib.request.urlretrieve(url, name)
+        #? We need to optimize the size of the generated picture, beacuse spotipy tends to be buggy when a big file is given.
+
+        urllib.request.urlretrieve(url, name) #? It's easier to download from the given url.
         file = Image.open(name)
-        file.save(f"images\\{filename}_optimized.jpeg", "JPEG", optimize=True, quality=75)
-        file.close()
+        file.save(f"images\\{filename}_optimized.jpeg", "JPEG", optimize=True, quality=75) 
+        file.close() 
         remove(name)
         return f"images\\{filename}_optimized.jpeg" 
