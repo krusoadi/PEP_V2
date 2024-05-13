@@ -99,7 +99,7 @@ class MainPage(tk.Tk):
         scrollbar.config(command=answer_text.yview)
         
     def createDropdownMenus(self) -> None:
-        '''This function creates the dropdown menus for the main page., where we can adjust the generation time interval, and the model.'''
+        '''This function creates the dropdown menus for the main page, where we can adjust the generation time interval, and the model.'''
         generation_terms_options = apis.TIME_RANGE.copy()
         model_options = ["gpt-4-turbo-2024-04-09", "gpt-3.5-turbo"]
 
@@ -147,13 +147,13 @@ class MainPage(tk.Tk):
     def generate_playlist(self): 
         '''This function calls the spotify playlist creator and if needed, calls the picture generation.'''
         spoti._setTimestamp()
-        prompt = f"A pixelart of {gpt.artist_and_songs[0][1]}"
+        prompt = f"A pixelart of {gpt.artist_and_songs[0][1]} (the musician)"
         
         if self.generate_image_flag.get() == False:
             spoti.playlist()
             spoti.addSongToPlaylist(song_uri=spoti.getSongIdByName(gpt.artist_and_songs))
         else:
-            spoti.playlist(picture_path=gpt.generateImage(prompt, f"Playlist_image_{spoti.last_timestamp}.png"))
+            spoti.playlist(picture_path=gpt.generateImage(prompt, f"Playlist_image"))
             spoti.addSongToPlaylist(song_uri=spoti.getSongIdByName(gpt.artist_and_songs))
 
 

@@ -31,7 +31,7 @@ class ChatBot:
         un_parsed_answer = self.last_full_response.choices[0].message.content.split("\n")
         self.artist_and_songs = []
         
-        for i, element in enumerate(un_parsed_answer):
+        for i, element in enumerate(un_parsed_answer): #? Parsing with different delimiters (sometimes the model generates with other limiters)
             un_parsed_answer[i] = element.split(split_char)
             
             if len(un_parsed_answer[i]) == 1:
