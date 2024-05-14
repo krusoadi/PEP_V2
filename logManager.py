@@ -24,10 +24,10 @@ class LogManager:
 
     def logEvent(self, event: str) -> None:
         '''This function logs the event into the log file'''
-        self._incremetnCallCounter()
+        self._incrementCallCounter()
         self.log.write(f"{event}\n")
         self.log.flush()
     
-    def _incremetnCallCounter(self) -> None:
+    def _incrementCallCounter(self) -> None:
         '''This function increments the call counter'''
         self.callCounter += 1
