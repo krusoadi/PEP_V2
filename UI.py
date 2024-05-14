@@ -55,8 +55,15 @@ class LoginPage(tk.Tk):
     def redirect(self) -> None:
         '''This function redirects the user from the Login Page.'''
         spoti.authorizeUser()
-        self.destroy()
-        pass
+        if spoti.is_authorized:
+            self.destroy()
+        else:
+            self.FailedLogin()
+
+    def FailedLogin(self) -> None:
+        '''This function creates a text, if the login was unsuccessful.'''
+        failed_login_text = tk.Label(self, text="Login failed, please try again.", bg="#191414", fg="red", font=self.def_font)
+        failed_login_text.place(relx=0.5, rely=0.9, anchor=tk.CENTER)
 
 class MainPage(tk.Tk):
     '''This class is the page where the user can interact with the AI, and generate playlists based on the given input.'''

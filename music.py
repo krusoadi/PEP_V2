@@ -1,5 +1,5 @@
 from spotipy import Spotify
-from spotipy.oauth2 import SpotifyOAuth
+from spotipy.oauth2 import *
 import webbrowser
 import time
 import base64
@@ -29,14 +29,8 @@ class Music:
     
     def _setClient(self, auth: SpotifyOAuth) -> None:
         '''Private method to create a client with the given authorizer, and to check if it was successful.'''
-        
-        try:
-            self.client = Spotify(auth_manager=auth)
-            self.is_authorized = True
-        except SpotifyOAuth as e:
-            self.logger.logEvent(f"(User/Connection Error) LoginError: {e}")
-            self.is_authorized = False
-        
+        self.client = Spotify(auth_manager=auth)
+            
     def authorizeUser(self) -> None:
         '''This method opens a webbrowser, and authorizes the user to use the Spotify API. It also sets the client, with the new user.'''
         
@@ -47,8 +41,17 @@ class Music:
 
         auth_url = authorizer.get_authorize_url()
         webbrowser.open(auth_url)
-        self._setClient(authorizer)
         
+        
+        self._setClient(authorizer)
+        try:
+            self.getUserName() 
+        except Exception as e:
+            self.logger.logEvent(f"(Connection Error) {e}\n")
+            self.is_authorized = False
+            return
+        self.is_authorized = True
+            
     def getUserName(self) -> str:
         """This method returns the current users name."""
         return self.client.me()["display_name"]
