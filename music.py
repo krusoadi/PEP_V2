@@ -5,6 +5,7 @@ import time
 import base64
 from logManager import LogManager
 from time import sleep
+import os
 
 class Music:
     '''Spotify Music platform. at intialization it needs a client_id, client_secret, redirect_uri, scope and a logger.'''
@@ -39,10 +40,11 @@ class Music:
                             redirect_uri=self.redirect_uri,
                             scope=self.scope)
 
+
         auth_url = authorizer.get_authorize_url()
         webbrowser.open(auth_url)
         
-        
+                
         self._setClient(authorizer)
         try:
             self.getUserName() 
@@ -50,7 +52,9 @@ class Music:
             self.logger.logEvent(f"(Connection Error) {e}\n")
             self.is_authorized = False
             return
+        
         self.is_authorized = True
+        os.remove(authorizer.cache_handler.cache_path)
             
     def getUserName(self) -> str:
         """This method returns the current users name."""
