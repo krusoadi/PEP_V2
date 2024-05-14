@@ -36,8 +36,8 @@ class LoginPage(tk.Tk):
         self.title("Login Page")
         self.configure(bg="#191414")  # Spotify green
         self.geometry("800x600")
-        self.iconbitmap('icon.ico')
-        self.image = image = tk.PhotoImage(file="mainLogo.png")
+        self.iconbitmap('icons\icon.ico')
+        self.image = image = tk.PhotoImage(file="icons\mainLogo.png")
         self.def_font = font.Font(family="Dubai Medium", size=12)
         
         self.create_widgets()
@@ -71,7 +71,7 @@ class MainPage(tk.Tk):
         self.title("Playlist Generator")
         self.configure(bg="#191414")  # Spotify green
         self.geometry("800x600")
-        self.iconbitmap('icon.ico')
+        self.iconbitmap('icons\icon.ico')
         self.def_font = font.Font(family="Dubai Medium", size=12)
         
         self.generated_flag = tk.BooleanVar(self, False)

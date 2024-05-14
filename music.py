@@ -89,7 +89,7 @@ class Music:
     def _loadDefaultPicture(self) -> str:
         '''Private method, loads the default picture for the playlist.'''
         
-        with open('picture1.jpeg', 'rb') as image_file: #? Reading in the image file in base 64
+        with open('icons\picture1.jpeg', 'rb') as image_file: #? Reading in the image file in base 64
             base64_bytes = base64.b64encode(image_file.read())
             base64_string = base64_bytes.decode()
 
