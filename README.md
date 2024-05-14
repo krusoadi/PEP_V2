@@ -22,6 +22,9 @@ Right now the program supports the GPT 3.5 Turbo and GPT4 model. The first model
 
 For playlist picture generation, the program uses DALL-E 2.0. This can make the process much slower, and more expensive, so by default this function is turned off, but with the checkbox, this can be changed.
 
+> [!IMPORTANT]
+> Using Picture generation is 0.016$, which is a lot higher than just generating the playlist. if we'd > like to generate a lot of playlists, I advise not to generate pictures.
+
 ## Used extensions, etc.
 
 ### Comments
