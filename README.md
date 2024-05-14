@@ -14,9 +14,9 @@ The program supports the default Spotify time intervals. The long_term option wi
 
 Right now the program supports the GPT 3.5 Turbo and GPT4 model. The first model is better when we want more genereric, more deterministic answers, it mostly generates popular music made before 2021-22. However the GPT 4 is better at generating less popular music, and give as more verbose results. I advise using the GPT 4 model.
 
-### DALL-E 2
+### DALL-E 2.0
 
-For playlist picture generation, the program uses DALL-E 2. This can make the process much slower, and more expensive, so by default this function is turned off, but with the checkbox, this can be changed.
+For playlist picture generation, the program uses DALL-E 2.0. This can make the process much slower, and more expensive, so by default this function is turned off, but with the checkbox, this can be changed.
 
 ## Used extensions, etc.
 
@@ -32,15 +32,13 @@ I've used Github Copilot, for the comments, Docstrings and to generate more read
 Used Python libraries are:
 
 - openai
-- webbrowser
 - spotipy
-- time
-- base64
-- tkinter
+- webbrowser (Opening Spoitfy Authorization page)
+- time (Delaying when uploading playlist picture)
+- base64 (Image decoding)
+- tkinter (UI)
+- os (for image file management)
+- PIL (for image optimization)
 
 ### Logo
 The logo was created with [Onlinelogomaker](https://www.onlinelogomaker.com/),and the pictures are made with [DALL-E 2.0](https://openai.com/dall-e-2).
-
-> [!WARNING]
-> Still under development
-
