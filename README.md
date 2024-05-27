@@ -47,6 +47,8 @@ Used Python libraries are:
 - os (for file management)
 - [Pillow (PIL)](https://github.com/python-pillow/Pillow) (for image optimization)
 
+The versions of these libraries are in the dependency graph (or [here](requirements.txt))
+
 ### Logo
 The logo was created with [Onlinelogomaker](https://www.onlinelogomaker.com/),and the pictures are made with [DALL-E 2.0](https://openai.com/dall-e-2).
 
