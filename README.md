@@ -49,6 +49,8 @@ Used Python libraries are:
 
 The versions of these libraries are in the dependency graph (or [here](requirements.txt))
 
+The Python version used for developing: Python 3.11.3 
+
 ### Logo
 The logo was created with [Onlinelogomaker](https://www.onlinelogomaker.com/),and the pictures are made with [DALL-E 2.0](https://openai.com/dall-e-2).
 
@@ -59,3 +61,7 @@ The Spotify API doesn't really support images with big size for playlists, so th
 ### [The photos of the runtime](photos_of_runtime)
 
 The photos in this directory show the app in runtime, and the resulting playlist in spotify.
+
+### Running the app
+
+Make sure the required dependencies are downloaded, and run the main.py. When the program used for the first time, it needs authentication, which will pop up instantly in the default browser of the user. The app was developed using Python 3.11.3 so I advise using this version for running.
