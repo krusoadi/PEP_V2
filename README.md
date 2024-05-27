@@ -53,3 +53,7 @@ The logo was created with [Onlinelogomaker](https://www.onlinelogomaker.com/),an
 ### Picture optimization
 
 The Spotify API doesn't really support images with big size for playlists, so the generated images, are optimized with PIL, for upload stability. Also the picture upload needs to be delayed, so the Spotify has enough time to create the playlist.
+
+### [The photos of the runtime](photos_of_runtime)
+
+The photos in this directory show the app in runtime, and the resulting playlist in spotify.
