@@ -2,7 +2,7 @@
 
 ## Basic infos
 
-This project is made for my Prompt Engineering class at BME. With this project I've learned the basics of Spotipy and Openai python libraries. With this project I'm also learning how to use Github, and Github Copilot efficiently for my studies.
+This project is made for my Prompt Engineering class at BME. With this project I've learned the basics of Spotipy, Openai python libraries and I'm also learning how to use Github, and Github Copilot efficiently for my studies.
 
 ## [src/example_apis.py](example_apis.py)
 
@@ -44,8 +44,12 @@ Used Python libraries are:
 - time (Delaying when uploading playlist picture)
 - base64 (Image decoding)
 - tkinter (UI)
-- os (for image file management)
+- os (for file management)
 - PIL (for image optimization)
 
 ### Logo
 The logo was created with [Onlinelogomaker](https://www.onlinelogomaker.com/),and the pictures are made with [DALL-E 2.0](https://openai.com/dall-e-2).
+
+### Picture optimization
+
+The Spotify API doesn't really support images with big size for playlists, so the generated images, are optimized with PIL, for upload stability. Also the picture upload needs to be delayed, so the Spotify has enough time to create the playlist.
