@@ -1,5 +1,5 @@
 from openai import OpenAI
-from logManager import LogManager
+from .logManager import LogManager
 import urllib.request
 from os import path, mkdir, remove
 from PIL import Image
@@ -45,7 +45,7 @@ class ChatBot:
     def _autoSave(self) -> None: 
         '''This function saves the last response into a file.'''
         
-        with open("responses.txt", "a", encoding="utf-8") as file:
+        with open("..\\responses.txt", "a", encoding="utf-8") as file:
             file.write(f"\n\n--------------used_tokens: {self.last_response_tokens}---------------\n")
             
             for element in self.artist_and_songs:
@@ -123,21 +123,21 @@ class ChatBot:
     def generateImage(self, prompt:str, filename:str, debug_mode:bool = False) -> str:
         '''This function generates an image for the spoitfy playlist, if debugmode is on.'''
         if debug_mode:
-             return f"images\\{filename}.jpeg"
+             return f"..\\images\\{filename}.jpeg"
         
         resp = self.client.images.generate(prompt= prompt, model="dall-e-2", size="256x256", n=1, response_format="url")
         url = resp.data[0].url
         
-        if not path.isdir("images"): 
-            mkdir("images")
+        if not path.isdir("..\\images"): 
+            mkdir("..\\images")
 
-        name = f"images\\{filename}.jpeg"
+        name = f"..\\images\\{filename}.jpeg"
 
         #? We need to optimize the size of the generated picture, beacuse spotipy tends to be buggy when a big file is given.
 
         urllib.request.urlretrieve(url, name) #? It's easier to download from the given url.
         file = Image.open(name)
-        file.save(f"images\\{filename}_optimized.jpeg", "JPEG", optimize=True, quality=75) 
+        file.save(f"..\\images\\{filename}_optimized.jpeg", "JPEG", optimize=True, quality=75) 
         file.close() 
         remove(name)
-        return f"images\\{filename}_optimized.jpeg" 
+        return f"..\\images\\{filename}_optimized.jpeg" 

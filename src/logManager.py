@@ -6,10 +6,12 @@ import time
 class LogManager:
     def __init__(self) -> None:
         #? Constructor
-        if path.exists("events.log"):
-            self.log = open("events.log", "a", encoding="utf-8")
+        ourpath = "..\\events.log"
+        
+        if path.exists(ourpath):
+            self.log = open(ourpath, "a", encoding="utf-8")
         else:
-            self.log = open("events.log", "w", encoding="utf-8")
+            self.log = open(ourpath, "w", encoding="utf-8")
             self.log.write(f"---------------Log file created at: {time.ctime()}\n\n")
     
         self.log.write(f"---------------Log init at: {time.ctime()}\n")

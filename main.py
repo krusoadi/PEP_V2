@@ -1,4 +1,4 @@
-from UI import *
+from src.UI import *
 
 if __name__ == "__main__":
     app = LoginPage()

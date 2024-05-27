@@ -1,15 +1,16 @@
 import tkinter as tk
 from tkinter import font
-from music import Music
-from chatbot import ChatBot
-import apis
-from logManager import LogManager
+from .music import Music
+from .chatbot import ChatBot
+from .apis import *
+from .logManager import LogManager
 from tkinter import ttk
+from os import path
 
 
 logger = LogManager()
-spoti = Music(apis.CLIENT_ID, apis.CLIENT_SECRET, apis.REDIRECT_URI, apis.SCOPE, logger=logger)
-gpt = ChatBot(apis.OPENAI_API)
+spoti = Music(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, SCOPE, logger=logger)
+gpt = ChatBot(OPENAI_API)
 
 class TextWithVar(tk.Text):
     '''This class is a text widget, that updates itself, when the textvariable changes.'''
@@ -37,7 +38,12 @@ class LoginPage(tk.Tk):
         self.configure(bg="#191414")  # Spotify green
         self.geometry("800x600")
         self.iconbitmap('icons\icon.ico')
-        self.image = image = tk.PhotoImage(file="icons\mainLogo.png")
+        
+        script_dir = path.dirname(path.realpath(__file__))
+        image_path = path.join(script_dir, '..', 'icons', 'mainLogo.png')
+
+        
+        self.image = image = tk.PhotoImage(file=image_path)
         self.def_font = font.Font(family="Dubai Medium", size=12)
         
         self.create_widgets()
@@ -71,7 +77,12 @@ class MainPage(tk.Tk):
         self.title("Playlist Generator")
         self.configure(bg="#191414")  # Spotify green
         self.geometry("800x600")
-        self.iconbitmap('icons\icon.ico')
+        
+        script_dir = path.dirname(path.realpath(__file__))
+        image_path = path.join(script_dir, '..', 'icons', 'icon.ico')
+
+        
+        self.iconbitmap(image_path)
         self.def_font = font.Font(family="Dubai Medium", size=12)
         
         self.generated_flag = tk.BooleanVar(self, False)
@@ -106,7 +117,7 @@ class MainPage(tk.Tk):
         
     def createDropdownMenus(self) -> None:
         '''This function creates the dropdown menus for the main page, where we can adjust the generation time interval, and the model.'''
-        generation_terms_options = apis.TIME_RANGE.copy()
+        generation_terms_options = TIME_RANGE.copy()
         model_options = ["gpt-4-turbo-2024-04-09", "gpt-3.5-turbo"]
 
         self.selected_generation_term = tk.StringVar(self)

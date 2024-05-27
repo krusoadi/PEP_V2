@@ -3,7 +3,7 @@ from spotipy.oauth2 import *
 import webbrowser
 import time
 import base64
-from logManager import LogManager
+from .logManager import LogManager
 from time import sleep
 import os
 
