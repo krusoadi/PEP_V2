@@ -48,7 +48,6 @@ class ChatBot:
         script_dir = path.dirname(path.realpath(__file__))
         response_path = path.join(script_dir, '..', 'log', 'responses.txt')
 
-        
         with open(response_path, "a", encoding="utf-8") as file:
             file.write(f"\n\n--------------used_tokens: {self.last_response_tokens}---------------\n")
             

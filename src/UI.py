@@ -7,6 +7,7 @@ from .logManager import LogManager
 from tkinter import ttk
 from os import path
 
+#? Global Clients and logger
 
 logger = LogManager()
 spoti = Music(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, SCOPE, logger=logger)
@@ -81,7 +82,6 @@ class MainPage(tk.Tk):
         script_dir = path.dirname(path.realpath(__file__))
         image_path = path.join(script_dir, '..', 'icons', 'icon.ico')
 
-        
         self.iconbitmap(image_path)
         self.def_font = font.Font(family="Dubai Medium", size=12)
         
@@ -129,7 +129,6 @@ class MainPage(tk.Tk):
         style = ttk.Style()
         style.configure('TCombobox', font=self.def_font)
 
-
         generation_terms_menu = ttk.Combobox(self, textvariable=self.selected_generation_term, values=generation_terms_options, style="TCombobox", state="readonly")
         model_menu = ttk.Combobox(self, textvariable=self.selected_model, values=model_options, style="TCombobox", state="readonly")
 
@@ -144,7 +143,6 @@ class MainPage(tk.Tk):
         generate_image_checkbox = ttk.Checkbutton(self, text="Generate Image", style="TCheckbutton", variable=self.generate_image_flag)
         generate_image_checkbox.place(relx=0.1, rely=0.8, anchor=tk.CENTER)
 
-
     def create_widgets(self) -> None:
         '''This function creates the widgets for the main page.'''
         self.createGPTTextSpace()
@@ -152,14 +150,12 @@ class MainPage(tk.Tk):
         self.createCheckbox()
         self.createButtons()
 
-        
     def generate_answer(self) -> None:
         '''This function generates the answer for the user, based on the selected model and time interval.'''
         gpt.model = self.selected_model.get()
         gpt.generateAnswer(spoti.mostListenedArtist(time_interval=self.selected_generation_term.get()))
         self.generated_flag.set(True)
         self.display_answer.set(gpt.generateReturnText())
-        
 
     def generate_playlist(self): 
         '''This function calls the spotify playlist creator and if needed, calls the picture generation.'''
