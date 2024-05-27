@@ -4,7 +4,7 @@
 
 This project is made for my Prompt Engineering class at BME. With this project I've learned the basics of Spotipy and Openai python libraries. With this project I'm also learning how to use Github, and Github Copilot efficiently for my studies.
 
-## [example_apis.py](example_apis.py)
+## [src/example_apis.py](example_apis.py)
 
 This file is an example of the apis.py where you can store the API keys, and scopes for the program.
 

@@ -45,7 +45,11 @@ class ChatBot:
     def _autoSave(self) -> None: 
         '''This function saves the last response into a file.'''
         
-        with open("..\\responses.txt", "a", encoding="utf-8") as file:
+        script_dir = path.dirname(path.realpath(__file__))
+        response_path = path.join(script_dir, '..', 'log', 'responses.txt')
+
+        
+        with open(response_path, "a", encoding="utf-8") as file:
             file.write(f"\n\n--------------used_tokens: {self.last_response_tokens}---------------\n")
             
             for element in self.artist_and_songs:
