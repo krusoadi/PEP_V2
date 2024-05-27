@@ -45,7 +45,7 @@ Used Python libraries are:
 - base64 (Image decoding)
 - tkinter (UI)
 - os (for file management)
-- PIL (for image optimization)
+- [Pillow (PIL)](https://github.com/python-pillow/Pillow) (for image optimization)
 
 ### Logo
 The logo was created with [Onlinelogomaker](https://www.onlinelogomaker.com/),and the pictures are made with [DALL-E 2.0](https://openai.com/dall-e-2).
