@@ -1,8 +1,6 @@
 apis.py
 .cache
 __pycache__
-events.log
-responses.txt
 font_test.py
 imggen.ipynb
 images
