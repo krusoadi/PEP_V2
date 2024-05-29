@@ -31,7 +31,7 @@ For playlist picture generation, the program uses DALL-E 2.0. This can make the 
 
 The comments are colored by "Better Comments" VSCode extension. The "#?" comments are descriptions for variables. The "#!" comments are warnings, and the "#TODO" comments mark unfinished methods and files.
 
-### Github Copilot
+### GitHub Copilot
 
 I've used Github Copilot, for the comments, Docstrings and to generate more readable codes. I also used it to debug, and it helped me to learn Pythons TKinter library.
 
@@ -64,4 +64,6 @@ The photos in this directory show the app in runtime, and the resulting playlist
 
 ### Running the app
 
-Make sure the required dependencies are downloaded, and run the main.py. When the program used for the first time, it needs authentication, which will pop up instantly in the default browser of the user. The app was developed using Python 3.11.3 so I advise using this version for running.
+Make sure the required dependencies are downloaded, and run the main.py. When the program used for the first time, it needs
+authentication, which will pop up instantly in the default browser of the user. The app was developed using Python 3.11.3,
+so I advise using this version for running. Don't forget to rename example_apis.py to apis.py and put it in the sources folder.
